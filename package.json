@@ -1,0 +1,17 @@
+{
+  "name": "zilswitcher",
+  "version": "1.0.0",
+  "description": "Watches for work and stops/starts other miner while ZIL is not in PoW phase",
+  "main": "server.js",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "jshint": "^2.9.7",
+    "taskkill": "^2.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
