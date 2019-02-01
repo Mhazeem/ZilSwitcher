@@ -55,8 +55,8 @@ Seconds to next PoW window check: ${secsToNext}`);
                 setTimeout(spinUpMiner, 8000, 'zil');
                 setTimer(10);
         } else {
-            console.log(`\r\nPoW isn't running, check again in ${secsToNext > 10 ? secsToNext : 10} seconds.`);
-            setTimer(secsToNext > 10 ? secsToNext : 10);
+            console.log(`\r\nPoW isn't running, check again in ${secsToNext > 10 ? secsToNext : 1} seconds.`);
+            setTimer(secsToNext > 10 ? secsToNext : 1);
         }
     })
     .catch((error) => {
@@ -89,16 +89,19 @@ function spinUpMiner(minername){
     const { spawn } = require('child_process');
     const bat = spawn('cmd.exe', ['/c', batPath], {cwd: batPath.substr(0, batPath.lastIndexOf('\\'))});
 
-    // Uncomment the below lines to display miner output in the main console window.
+    // Uncomment the below line groups to display miner output in the main console window.
     // This may or may not work correctly depending on the secondary miner you use.
 
-    // bat.stdout.on('data', (data) => {
-    // console.log(data.toString());
-    // });
+    // Comment from --here--
+    bat.stdout.on('data', (data) => {
+    console.log(data.toString());
+    });
 
-    // bat.stderr.on('data', (data) => {
-    // console.log(data.toString());
-    // });
+    bat.stderr.on('data', (data) => {
+    console.log(data.toString());
+    });
+
+    // To --here-- to disable miner output to stop clutter.
 
     bat.on('exit', (code) => {
     console.log(`${Minername} exited with code ${code}.`);
