@@ -46,8 +46,8 @@ Seconds to next PoW window check: ${secsToNext}`);
         if (isPoW) {
             console.log("\r\nPoW window starting!");
             ZilPOWRunning = true;
-            console.log("Setting a timer to finish Zil PoW phase in 5 minutes...");
-            setTimeout(FinishPoWWindow, 300000);
+            console.log("Setting a timer to finish Zil PoW phase in 90 seconds...");
+            setTimeout(FinishPoWWindow, 90000);
         } else if (secsToNext < 30 && ! inWarmupState){
                 inWarmupState = true;
                 console.log(`\r\nPoW window is soon-- Warming up.`);
