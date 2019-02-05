@@ -32,7 +32,7 @@ ZIL_API_SERVER  // Default: https://api.zilliqa.com/ (This field may be left bla
 
 ### Notes
 1. The method ZilSwitcher uses to start your miners will try to display your miner's output in the ZilSwitcher window, but not all miner support this. If it's not clear if you're mining your secondary coin, use an application like MSI Afterburner to see if your cards are being used.
-    1. Comment out line 100 - line 106 in "server.js" to disable your miner's output. This will tidy up the ZilSwitcher window, but you'll just have to trust that your miner is working in the background.
+    1. Comment out line 147 - line 155 in "server.js" to disable your miner's output. This will tidy up the ZilSwitcher window, but you'll just have to trust that your miner is working in the background.
     1. You can check to make sure your graphics cards are mining by monitoring an application such as MSI Afterburner.
 
 
