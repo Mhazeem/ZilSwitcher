@@ -1,17 +1,27 @@
 {
   "name": "zilswitcher",
   "version": "1.0.0",
-  "description": "Watches for work and stops/starts other miner while ZIL is not in PoW phase",
+  "description": "1. Windows - Tested on Windows 10\r 2. A recent copy of Node JS such as 10.15.1 LTS (Download https://nodejs.org/en/)",
   "main": "server.js",
   "dependencies": {
     "axios": "^0.18.0",
-    "jshint": "^2.9.7",
+    "cli-cursor": "^2.1.0",
+    "figlet": "^1.2.1",
     "taskkill": "^2.0.0"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanSoQt/ZilSwitcher.git"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DanSoQt/ZilSwitcher/issues"
+  },
+  "homepage": "https://github.com/DanSoQt/ZilSwitcher#readme"
 }
