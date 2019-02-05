@@ -3,6 +3,7 @@
 
 ### Pre-requsites
 1. Windows - Tested on Windows 10
+    1. Linux support may be added in the future.
 2. A recent copy of Node JS such as 10.15.1 LTS (Download https://nodejs.org/en/)
 
 ### Installation
@@ -14,7 +15,7 @@
 
 ### Usage
 1. Open a command prompt or powershell to the ZilSwitcher directory
-2. Set the following environment variables as shown:
+2. Set the following environment variables as shown. Do not enclose any values in quotes ( " or ' ):
     1. If using command prompt, set environment variables using the format:
         `set variablename=value`
     1. If using Powershell, set environment variables using the format:
@@ -30,9 +31,8 @@ ZIL_GETWORK_NODE  // Example: http://192.168.1.14:4202/api
 4. Sit back, relax, and watch ZilSwitcher do it's thing.
 
 ### Notes
-1. The method ZilSwitcher uses to start your miners will not display any visible output by default.
-    1. You can enable the output of your miners to show in ZilSWitcher's window, but depending on your miner, it may or may not provide it's output. See line 100 - line 106 in "server.js".
-    1. Miner output is dsabled to keep the ZilMiner window cleaner.
+1. The method ZilSwitcher uses to start your miners will try to display your miner's output in the ZilSwitcher window, but not all miner support this. If it's not clear if you're mining your secondary coin, use an application like MSI Afterburner to see if your cards are being used.
+    1. Comment out line 100 - line 106 in "server.js" to disable your miner's output. This will tidy up the ZilSwitcher window, but you'll just have to trust that your miner is working in the background.
     1. You can check to make sure your graphics cards are mining by monitoring an application such as MSI Afterburner.
 
 
