@@ -2,6 +2,9 @@ const taskkill = require('taskkill');
 const ospath = require('path');
 const cliCursor = require('cli-cursor');
 const isWindowsOS = require('os').type() == "Windows_NT" ? true : "Linux";
+var Stopwatch = require("node-stopwatch").Stopwatch;
+
+var stopwatch = Stopwatch.create();
 
 cliCursor.hide();
 console.log('\033[2J');
@@ -70,9 +73,18 @@ Estimated next PoW window in: ${secsToNextPow} seconds.`);
             if (parseInt(TXBlockNum.toString().slice(-2)) != 99 && parseInt(TXBlockNum.toString().slice(-2)) > 0){
                 console.log("Were at block 1 or higher in the new epoch. Switching to secondary miner.");
                 FinishPoWWindow();
+                stopwatch.reset();
+            }
+            else if (parseInt(TXBlockNum.toString().slice(-2)) > 0 && stopwatch.elapsed.seconds > 90){
+                console.log("It's been at least 90 seconds since the new epoch. PoW should be over.")
+                FinishPoWWindow();
+                stopwatch.reset();
             }
             else{
-                console.log(`We're still in the PoW TX block for DS Epoch ${DSEpochNum}}, check again in ${secsToNextCheck} seconds...`)
+                if (stopwatch.elapsed.ticks == 0){
+                    stopwatch.start();
+                }
+                console.log(`We're still in the PoW TX block for DS Epoch ${DSEpochNum}, check again in ${secsToNextCheck} seconds...`)
                 setTimer(secsToNextCheck);
             }
         }
@@ -91,7 +103,7 @@ Estimated next PoW window in: ${secsToNextPow} seconds.`);
             }
             else{
                 console.log(`\r\nCheck again in ${secsToNextCheck > 900 ? 900 : secsToNextCheck} seconds.`);
-                setTimer(secsToNextCheck > 900 ? 900 : secsToNextCheck);    
+                setTimer(secsToNextCheck > 900 ? 900 : secsToNextCheck);
             }
         }
     })
@@ -181,9 +193,10 @@ if (action =="start"){
       })();
 } else {
     clearInterval(twirlTimer);
-    process.stdout.write("\r\x1b[K")
+    process.stdout.write("\r\x1b[K");
 }
 }
 
-console.log("Starting up...");
-getWork();
+console.log("Starting up...\r\nYou're not currently running any miners.... are you? That wouldn't be good.");
+setTimeout(spinUpMiner, 5000, secondaryMiner);
+setTimeout(getWork, 8000);

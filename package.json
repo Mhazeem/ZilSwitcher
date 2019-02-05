@@ -7,6 +7,7 @@
     "axios": "^0.18.0",
     "cli-cursor": "^2.1.0",
     "figlet": "^1.2.1",
+    "node-stopwatch": "0.0.1",
     "taskkill": "^2.0.0"
   },
   "devDependencies": {},
