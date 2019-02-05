@@ -21,10 +21,10 @@
     1. If using Powershell, set environment variables using the format:
         `Env:variablename=value`
 ```
-SECONDARY_MINER  // The executable name of your secondaryminer, such as "ccminer"
+SECONDARY_MINER  // The executable name of your secondaryminer, such as "ccminer.exe"
 SECONDARY_MINER_PATH  // FULL Path to the batch file you want to use to launch your secondary miner.
 ZIL_MINER_PATH // FULL Path to the batch file to launch your ZilMiner.
-ZIL_GETWORK_NODE  // Example: http://192.168.1.14:4202/api
+ZIL_API_SERVER  // Default: https://api.zilliqa.com/ (This field may be left blank)
 ```
 3. run "npm start"
 -- Node should autodetect what to run and start ZilSwitcher.
