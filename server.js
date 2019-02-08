@@ -81,8 +81,8 @@ Estimated next PoW window in: ${secsToNextPow} seconds.`);
                 FinishPoWWindow();
                 stopwatch.reset();
             }
-            else if (stopwatch.elapsed.seconds > 90){
-                console.log("It's been at least 90 seconds since the new epoch. PoW should be over.")
+            else if (stopwatch.elapsed.seconds > global.PoWTimer){
+                console.log(`It's been at least ${global.PoWTimer} seconds since the new epoch. PoW should be over.`);
                 FinishPoWWindow();
                 stopwatch.reset();
             }
@@ -90,7 +90,7 @@ Estimated next PoW window in: ${secsToNextPow} seconds.`);
                 if (stopwatch.elapsed.ticks == 0){
                     stopwatch.start();
                 }
-                console.log(`We're still in the PoW TX block for DS Epoch ${DSEpochNum}, check again in ${secsToNextCheck} seconds...`)
+                console.log(`We're still in the PoW TX block for DS Epoch ${DSEpochNum}, check again in ${secsToNextCheck} seconds...`);
                 setTimer(secsToNextCheck);
             }
         }
