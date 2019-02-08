@@ -25,6 +25,7 @@ SECONDARY_MINER  // The executable name of your secondaryminer, such as "ccminer
 SECONDARY_MINER_PATH  // FULL Path to the batch file you want to use to launch your secondary miner.
 ZIL_MINER_PATH // FULL Path to the batch file to launch your ZilMiner.
 ZIL_API_SERVER  // Default: https://api.zilliqa.com/ (This field may be left blank)
+POW_WINDOW  // Default: 90 - Set a custom timer for the PoW window. Useful if you need to run PoW longer to try for the DS difficulty. (This field may be left blank)
 ```
 3. run "npm start"
 -- Node should autodetect what to run and start ZilSwitcher.
@@ -32,7 +33,7 @@ ZIL_API_SERVER  // Default: https://api.zilliqa.com/ (This field may be left bla
 
 ### Notes
 1. The method ZilSwitcher uses to start your miners will try to display your miner's output in the ZilSwitcher window, but not all miner support this. If it's not clear if you're mining your secondary coin, use an application like MSI Afterburner to see if your cards are being used.
-    1. Comment out line 147 - line 155 in "server.js" to disable your miner's output. This will tidy up the ZilSwitcher window, but you'll just have to trust that your miner is working in the background.
+    1. Comment out line 159 - line 166 in "server.js" to disable your miner's output. This will tidy up the ZilSwitcher window, but you'll just have to trust that your miner is working in the background.
     1. You can check to make sure your graphics cards are mining by monitoring an application such as MSI Afterburner.
 
 
