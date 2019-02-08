@@ -110,7 +110,7 @@ Estimated next PoW window in: ${secsToNextPow} seconds.`);
         } else {
             if (TXBlockNum.toString().slice(-2) > 90 && secsToNextCheck > 30){
                 console.log(`\r\nWe're close to the PoW Window. Forget the estimate and just check in 30 seconds.`);
-                setTimer(secsToNextCheck > 900 ? 900 : secsToNextCheck);
+                setTimer(30);
             }
             else{
                 console.log(`\r\nCheck again in ${secsToNextCheck > 900 ? 900 : secsToNextCheck} seconds.`);
