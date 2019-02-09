@@ -36,6 +36,12 @@ var twirlTimer;
     }
 });
 
+if (process.env.POW_WINDOW){
+    global.PoWTimer = parseInt(process.env.POW_WINDOW); // Set this to specify a custom PoW window. Useful if you want to try for DS difficulty and need to run PoW longer.
+} else {
+    global.PoWTimer = 90;
+}
+
 global.secondaryMiner = process.env.SECONDARY_MINER;  // The executable name of your secondaryminer, such as "ccminer.exe"
 global.secondaryMinerPath = ospath.normalize(process.env.SECONDARY_MINER_PATH);  // Path to the batch file you want to use to launch your secondary miner.
 global.zilMinerPath = ospath.normalize(process.env.ZIL_MINER_PATH); // Path to the batch file to launch your ZilMiner.
@@ -65,7 +71,7 @@ function getWork(){
         const TXBlockNum = parseInt(res.data.result.CurrentMiniEpoch);
         const TXBlockRate = res.data.result.TxBlockRate;
         const secsToNextPow = Math.floor((Math.ceil(TXBlockNum/100)*100 - TXBlockNum) / (TXBlockRate));
-        const secsToNextCheck = Math.floor((secsToNextPow / 2) > 5 ? secsToNextPow / 2 : 5);
+        const secsToNextCheck = Math.floor((secsToNextPow / 4) > 5 ? secsToNextPow / 4 : 5);
         const isPoW = parseInt(TXBlockNum.toString().slice(-2)) > 98;
         console.log(`\r\nWe're currently at TX block ${TXBlockNum}\r\n\
 Estimated next PoW window in: ${secsToNextPow} seconds.`);
@@ -75,8 +81,8 @@ Estimated next PoW window in: ${secsToNextPow} seconds.`);
                 FinishPoWWindow();
                 stopwatch.reset();
             }
-            else if (parseInt(TXBlockNum.toString().slice(-2)) > 0 && stopwatch.elapsed.seconds > 90){
-                console.log("It's been at least 90 seconds since the new epoch. PoW should be over.")
+            else if (stopwatch.elapsed.seconds > global.PoWTimer){
+                console.log(`It's been at least ${global.PoWTimer} seconds since the new epoch. PoW should be over.`);
                 FinishPoWWindow();
                 stopwatch.reset();
             }
@@ -84,22 +90,27 @@ Estimated next PoW window in: ${secsToNextPow} seconds.`);
                 if (stopwatch.elapsed.ticks == 0){
                     stopwatch.start();
                 }
-                console.log(`We're still in the PoW TX block for DS Epoch ${DSEpochNum}, check again in ${secsToNextCheck} seconds...`)
+                console.log(`We're still in the PoW TX block for DS Epoch ${DSEpochNum}, check again in ${secsToNextCheck} seconds...`);
                 setTimer(secsToNextCheck);
             }
         }
         else if (isPoW) {
-            console.log("\r\nLast block before the new epoch! Start our miners!");
-            ZilPOWRunning = true;
-            shutdownRunningMiners(secondaryMiner);
-            console.log("Cooling off for 6 seconds before starting up ZilMiner.");
-            setTimeout(spinUpMiner, 6000, 'zil');
-            console.log("Setting a timer to check PoW status in 60 seconds...");
-            setTimer(60);
+            if (! inWarmupState){
+                console.log("\r\nClose enough to the new epoch! Do the switch!");
+                shutdownRunningMiners(secondaryMiner);
+                console.log("Cooling off for 6 seconds before starting up ZilMiner.");
+                setTimeout(spinUpMiner, 6000, 'zil');
+                inWarmupState = true;
+                setTimer(15);
+            }
+            if (parseInt(TXBlockNum.toString().slice(-2)) == 0){
+                ZilPOWRunning = true;
+                getWork();
+            }
         } else {
-            if (TXBlockNum.toString().slice(-2) > 94 && secsToNextCheck > 30){
+            if (TXBlockNum.toString().slice(-2) > 90 && secsToNextCheck > 30){
                 console.log(`\r\nWe're close to the PoW Window. Forget the estimate and just check in 30 seconds.`);
-                setTimer(secsToNextCheck > 900 ? 900 : secsToNextCheck);
+                setTimer(30);
             }
             else{
                 console.log(`\r\nCheck again in ${secsToNextCheck > 900 ? 900 : secsToNextCheck} seconds.`);
